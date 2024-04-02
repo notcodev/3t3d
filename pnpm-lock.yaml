@@ -11,6 +11,9 @@ dependencies:
   '@react-three/fiber':
     specifier: ^8.16.1
     version: 8.16.1(react-dom@18.2.0)(react@18.2.0)(three@0.163.0)
+  clsx:
+    specifier: ^2.1.0
+    version: 2.1.0
   effector:
     specifier: ^23.2.0
     version: 23.2.0
@@ -1706,6 +1709,11 @@ packages:
     dependencies:
       escape-string-regexp: 1.0.5
     dev: true
+
+  /clsx@2.1.0:
+    resolution: {integrity: sha512-m3iNNWpd9rl3jvvcBnu70ylMdrXt8Vlq4HYadnU5fwcOtvkSQWPmj7amUcDT2qYI7risszBjI5AUIUox9D16pg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}

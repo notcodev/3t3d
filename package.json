@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-three/drei": "^9.103.0",
     "@react-three/fiber": "^8.16.1",
+    "clsx": "^2.1.0",
     "effector": "^23.2.0",
     "effector-react": "^23.2.0",
     "react": "^18.2.0",

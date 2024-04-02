@@ -1,22 +1,24 @@
-import { OrbitControls, RoundedBox } from '@react-three/drei'
-import { Canvas, useFrame, Vector3 } from '@react-three/fiber'
-import { useUnit } from 'effector-react'
 import {
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  createContext,
-  useContext,
-  useRef,
-  useState,
-} from 'react'
+  OrbitControls,
+  OrbitControlsProps,
+  RoundedBox,
+} from '@react-three/drei'
+import { ForwardRefComponent } from '@react-three/drei/helpers/ts-utils'
+import { Canvas, useFrame, Vector3 as Vector3Fiber } from '@react-three/fiber'
+import { useUnit } from 'effector-react'
+import { forwardRef, useRef } from 'react'
 import {
   BufferGeometry,
+  Material,
   MathUtils,
   Mesh,
   MeshBasicMaterial,
   NormalBufferAttributes,
+  Object3DEventMap,
+  Vector3,
 } from 'three'
+import { Button } from './components/ui/button'
+import { createRefStateContext } from './lib/react'
 import { model } from './model'
 import { selectCell } from './utils/select-cell'
 
@@ -26,13 +28,17 @@ const getCoordinates = (gap: number) => {
   return [-(BOX_SIZE + gap), 0, BOX_SIZE + gap] as const
 }
 
-const Cell = ({
-  position,
-  coordinates,
-}: {
-  coordinates: Vector3
-  position: [number, number, number]
-}) => {
+const Cell = forwardRef<
+  Mesh<
+    BufferGeometry<NormalBufferAttributes>,
+    Material | Material[],
+    Object3DEventMap
+  >,
+  {
+    coordinates: Vector3Fiber
+    position: [number, number, number]
+  }
+>(({ position, coordinates }, parentRef) => {
   const ref = useRef<Mesh<BufferGeometry<NormalBufferAttributes>> | null>(null)
 
   const hovered = useRef(false)
@@ -52,7 +58,17 @@ const Cell = ({
   if (!shape) {
     return (
       <RoundedBox
-        ref={ref}
+        ref={(element) => {
+          ref.current = element
+
+          if (parentRef) {
+            if (typeof parentRef === 'function') {
+              parentRef(element)
+            } else {
+              parentRef.current = element
+            }
+          }
+        }}
         onClick={(event) => {
           event.stopPropagation()
           cellClicked()
@@ -85,55 +101,116 @@ const Cell = ({
       />
     </RoundedBox>
   )
-}
+})
 
-const ExpandContext = createContext<{
-  expanded: boolean
-  setExpanded: Dispatch<SetStateAction<boolean>>
-} | null>(null)
+const [
+  ExpandContextProvider,
+  {
+    useContextState: useExpandContextState,
+    useContextRef: useExpandContextRef,
+  },
+] = createRefStateContext(false)
 
-const ExpantContextProvider = ({ children }: PropsWithChildren) => {
-  const [expanded, setExpanded] = useState(false)
-
-  return (
-    <ExpandContext.Provider value={{ expanded, setExpanded }}>
-      {children}
-    </ExpandContext.Provider>
-  )
-}
-
-const useExpandContext = () => {
-  const ctx = useContext(ExpandContext)
-
-  if (ctx === null) {
-    throw new Error(
-      'Hook "useExpandContext" called outside of ExpantContextProvider',
-    )
-  }
-
-  return ctx
-}
+const [
+  AutoRotateContextProvider,
+  {
+    useContextState: useAutoRotateContextState,
+    useContextRef: useAutoRotateContextRef,
+  },
+] = createRefStateContext(true)
 
 const Overlay = () => {
   const gameState = useUnit(model.$gameState)
-  const { expanded, setExpanded } = useExpandContext()
+  const [expanded, setExpanded] = useExpandContextState()
+  const [autoRotate, setAutoRotate] = useAutoRotateContextState()
 
   return (
     <main id="overlay">
-      <button onClick={() => setExpanded((prev) => !prev)}>
+      <Button onClick={() => setExpanded((prev) => !prev)}>
         {expanded ? 'Close' : 'Open'}
-      </button>
+      </Button>
+      <Button onClick={() => setAutoRotate((prev) => !prev)}>
+        {autoRotate ? 'Stop' : 'Run'}
+      </Button>
       <span>{gameState}</span>
     </main>
   )
 }
 
-const Scene = () => {
-  const { expanded } = useExpandContext()
-  const coordinates = getCoordinates(expanded ? 1 : 0.25)
+const Field = () => {
+  const cells = useRef<
+    {
+      position: Record<'x' | 'y' | 'z', number>
+      element: Mesh<
+        BufferGeometry<NormalBufferAttributes>,
+        Material | Material[],
+        Object3DEventMap
+      >
+    }[]
+  >([])
+  const expanded = useExpandContextRef()
+  const coordinates = getCoordinates(0.25)
+
+  console.log(1)
+
+  useFrame(() => {
+    cells.current.forEach(({ element, position }) => {
+      const coordinates = getCoordinates(expanded.current ? 1 : 0.25)
+
+      const x = coordinates[position.x]
+      const y = coordinates[position.y]
+      const z = coordinates[position.z]
+
+      element.position.lerp(new Vector3(x, y, z), 0.1)
+    })
+  })
 
   return (
-    <Canvas camera={{ position: [5, 5, 5] }}>
+    <group>
+      {coordinates.map((x, indexX) =>
+        coordinates.map((y, indexY) =>
+          coordinates.map((z, indexZ) => (
+            <Cell
+              key={`${x}:${y}:${z}`}
+              ref={(element) => {
+                if (element) {
+                  cells.current.push({
+                    position: { x: indexX, y: indexY, z: indexZ },
+                    element,
+                  })
+                }
+              }}
+              coordinates={[x, y, z]}
+              position={[indexX, indexY, indexZ]}
+            />
+          )),
+        ),
+      )}
+    </group>
+  )
+}
+
+type OrbitControlsImpl =
+  typeof OrbitControls extends ForwardRefComponent<OrbitControlsProps, infer E>
+    ? E
+    : never
+
+const Controls = () => {
+  const ref = useRef<OrbitControlsImpl | null>(null)
+  const autoRotate = useAutoRotateContextRef()
+
+  useFrame(() => {
+    if (!ref.current) return
+
+    ref.current.autoRotate = autoRotate.current
+  })
+
+  return <OrbitControls ref={ref} autoRotate={autoRotate.current} />
+}
+
+const Scene = () => {
+  return (
+    <Canvas camera={{ position: [6, 6, 6] }}>
       <ambientLight intensity={Math.PI / 2} />
       <directionalLight
         castShadow
@@ -148,28 +225,19 @@ const Scene = () => {
         shadow-bias={-0.0001}
       />
 
-      {coordinates.map((x, indexX) =>
-        coordinates.map((y, indexY) =>
-          coordinates.map((z, indexZ) => (
-            <Cell
-              key={`${x}:${y}:${z}`}
-              coordinates={[x, y, z]}
-              position={[indexX, indexY, indexZ]}
-            />
-          )),
-        ),
-      )}
-
-      <OrbitControls autoRotate={true} />
+      <Field />
+      <Controls />
     </Canvas>
   )
 }
 
 export const App = () => {
   return (
-    <ExpantContextProvider>
-      <Scene />
-      <Overlay />
-    </ExpantContextProvider>
+    <ExpandContextProvider>
+      <AutoRotateContextProvider>
+        <Scene />
+        <Overlay />
+      </AutoRotateContextProvider>
+    </ExpandContextProvider>
   )
 }
