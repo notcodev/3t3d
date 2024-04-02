@@ -1,3 +1,25 @@
 .button {
-  border: none;
+  background: hsl(0 0% 100%);
+  border: 1px solid hsl(240 5.9% 90%);
+  padding: 12px;
+  border-radius: 16px;
+  line-height: 1;
+  display: inline-flex;
+  color: hsl(0 0% 0%);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.button:hover {
+  background: hsl(240 4.8% 95.9%);
+}
+
+.button[aria-checked='true'] {
+  background: hsl(0 0% 0%);
+  color: hsl(0 0% 100%);
+}
+
+.button:hover[aria-checked='true'] {
+  background: hsl(0 0% 20%);
 }

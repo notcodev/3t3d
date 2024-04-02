@@ -17,15 +17,27 @@ import {
   Object3DEventMap,
   Vector3,
 } from 'three'
-import { Button } from './components/ui/button'
-import { createRefStateContext } from './lib/react'
+import { Layout } from './components/layout'
+import {
+  AutoRotateContextProvider,
+  useAutoRotateContextRef,
+} from './contexts/autorotate'
+import { ExpandContextProvider, useExpandContextRef } from './contexts/expand'
 import { model } from './model'
+import { Shape } from './types/game'
 import { selectCell } from './utils/select-cell'
 
 const BOX_SIZE = 1
 
 const getCoordinates = (gap: number) => {
   return [-(BOX_SIZE + gap), 0, BOX_SIZE + gap] as const
+}
+
+const cellColor: Record<Shape, string> = {
+  cross: 'red',
+  ring: 'green',
+  plus: 'blue',
+  cylinder: 'purple',
 }
 
 const Cell = forwardRef<
@@ -50,7 +62,7 @@ const Cell = forwardRef<
     if (!ref.current) return
     ;(ref.current.material as MeshBasicMaterial).opacity = MathUtils.lerp(
       (ref.current.material as MeshBasicMaterial).opacity,
-      hovered.current ? 1 : 0.35,
+      hovered.current ? 1.2 : 0.4,
       0.1,
     )
   })
@@ -95,47 +107,10 @@ const Cell = forwardRef<
       radius={0.1}
       position={coordinates}
     >
-      <meshLambertMaterial
-        color={shape === 'cross' ? 'red' : 'green'}
-        transparent
-      />
+      <meshLambertMaterial color={cellColor[shape]} transparent />
     </RoundedBox>
   )
 })
-
-const [
-  ExpandContextProvider,
-  {
-    useContextState: useExpandContextState,
-    useContextRef: useExpandContextRef,
-  },
-] = createRefStateContext(false)
-
-const [
-  AutoRotateContextProvider,
-  {
-    useContextState: useAutoRotateContextState,
-    useContextRef: useAutoRotateContextRef,
-  },
-] = createRefStateContext(true)
-
-const Overlay = () => {
-  const gameState = useUnit(model.$gameState)
-  const [expanded, setExpanded] = useExpandContextState()
-  const [autoRotate, setAutoRotate] = useAutoRotateContextState()
-
-  return (
-    <main id="overlay">
-      <Button onClick={() => setExpanded((prev) => !prev)}>
-        {expanded ? 'Close' : 'Open'}
-      </Button>
-      <Button onClick={() => setAutoRotate((prev) => !prev)}>
-        {autoRotate ? 'Stop' : 'Run'}
-      </Button>
-      <span>{gameState}</span>
-    </main>
-  )
-}
 
 const Field = () => {
   const cells = useRef<
@@ -150,8 +125,6 @@ const Field = () => {
   >([])
   const expanded = useExpandContextRef()
   const coordinates = getCoordinates(0.25)
-
-  console.log(1)
 
   useFrame(() => {
     cells.current.forEach(({ element, position }) => {
@@ -235,8 +208,9 @@ export const App = () => {
   return (
     <ExpandContextProvider>
       <AutoRotateContextProvider>
-        <Scene />
-        <Overlay />
+        <Layout>
+          <Scene />
+        </Layout>
       </AutoRotateContextProvider>
     </ExpandContextProvider>
   )

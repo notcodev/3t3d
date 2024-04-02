@@ -20,6 +20,12 @@ dependencies:
   effector-react:
     specifier: ^23.2.0
     version: 23.2.0(effector@23.2.0)(react@18.2.0)
+  lucide-react:
+    specifier: ^0.364.0
+    version: 0.364.0(react@18.2.0)
+  patronum:
+    specifier: ^2.2.0
+    version: 2.2.0(effector@23.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -3257,6 +3263,14 @@ packages:
       yallist: 4.0.0
     dev: true
 
+  /lucide-react@0.364.0(react@18.2.0):
+    resolution: {integrity: sha512-eHfdbJExWtTaZ0tBMGtI7PA/MbqV5wt+o4/yitDce17tadH/75Gq3Tq8jSteb3LhLr0eay/j5YUuN4yXjnI3aw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /maath@0.10.7(@types/three@0.163.0)(three@0.163.0):
     resolution: {integrity: sha512-zQ2xd7dNOIVTjAS+hj22fyj1EFYmOJX6tzKjZ92r6WDoq8hyFxjuGA2q950tmR4iC/EKXoMQdSipkaJVuUHDTg==}
     peerDependencies:
@@ -3505,6 +3519,14 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
     dev: true
+
+  /patronum@2.2.0(effector@23.2.0):
+    resolution: {integrity: sha512-Idsb5swd+2UI1NuBlHJuVA4WlaUeEluZJxGAZ9obCViuEf4pP68bij3f1sZCM/vqqWPsbHclYweDNt/sWu0O1g==}
+    peerDependencies:
+      effector: ^23
+    dependencies:
+      effector: 23.2.0
+    dev: false
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
