@@ -1,9 +1,9 @@
 {
-  "name": "@tic-tac-toe-3d/game-core",
+  "name": "@tic-tac-toe-3d/core",
   "version": "0.0.0",
   "description": "Common logic of the game",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*"
@@ -13,8 +13,8 @@
     "lint": "eslint . --ext ts --ext tsx --no-error-on-unmatched-pattern --fix"
   },
   "peerDependencies": {
-    "effector": "^23.2.0",
-    "patronum": "^2.2.0"
+    "effector": "^23.2.3",
+    "patronum": "^2.3.0"
   },
   "devDependencies": {
     "@siberiacancode/builder": "^1.3.11",
