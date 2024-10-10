@@ -1,37 +1,23 @@
 {
   "name": "tic-tac-toe-3d",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint \"src/**/*.{js,mjs,cjs,ts,mts,jsx,tsx}\"",
-    "preview": "vite preview",
-    "lint:fix": "eslint \"src/**/*.{js,mjs,cjs,ts,mts,jsx,tsx}\" --fix"
+  "engines": {
+    "pnpm": ">=9.2.0"
   },
-  "dependencies": {
-    "@react-three/drei": "^9.103.0",
-    "@react-three/fiber": "^8.16.1",
-    "clsx": "^2.1.0",
-    "effector": "^23.2.0",
-    "effector-react": "^23.2.0",
-    "lucide-react": "^0.364.0",
-    "patronum": "^2.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "three": "^0.163.0"
+  "scripts": {
+    "dev": "pnpm -r --if-present dev",
+    "build": "turbo run build",
+    "lint:ci": "turbo run lint:ci",
+    "lint": "turbo run lint"
   },
   "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@types/three": "^0.163.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.41.0",
-    "eslint-kit": "^10.0.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "prettier": "^3.0.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+    "@types/node": "20.9.0",
+    "eslint": "^8.57.1",
+    "eslint-kit": "^11.18.0",
+    "husky": "^9.1.6",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "turbo": "^2.1.3",
+    "typescript": "^5.6.2"
   }
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "dangerouslyDisablePackageManagerCheck": true,
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {},
+    "app#watch": {
+      "dependsOn": ["^build"]
+    },
+    "lint:ci": {},
+    "lint": {}
+  }
+}
