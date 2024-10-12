@@ -50,7 +50,7 @@ export const getGameState = (
           (pos) => field[selectCell([x, pos, z])] === currentCell,
         )
       ) {
-        return shapeOwners[currentCell]
+        return `${shapeOwners[currentCell]}_won`
       }
     }
 
@@ -63,7 +63,7 @@ export const getGameState = (
           (pos) => field[selectCell([pos, y, z])] === currentCell,
         )
       ) {
-        return shapeOwners[currentCell]
+        return `${shapeOwners[currentCell]}_won`
       }
     }
   }
@@ -79,7 +79,7 @@ export const getGameState = (
           (pos) => field[selectCell([x, y, pos])] === currentCell,
         )
       ) {
-        return shapeOwners[currentCell]
+        return `${shapeOwners[currentCell]}_won`
       }
     }
   }
@@ -88,19 +88,19 @@ export const getGameState = (
   for (const x of possiblePositions) {
     const result = checkDiagonals((pos1, pos2) => [x, pos1, pos2])
 
-    if (result) return shapeOwners[result]
+    if (result) return `${shapeOwners[result]}_won`
   }
 
   for (const y of possiblePositions) {
     const result = checkDiagonals((pos1, pos2) => [pos1, y, pos2])
 
-    if (result) return shapeOwners[result]
+    if (result) return `${shapeOwners[result]}_won`
   }
 
   for (const z of possiblePositions) {
     const result = checkDiagonals((pos1, pos2) => [pos1, pos2, z])
 
-    if (result) return shapeOwners[result]
+    if (result) return `${shapeOwners[result]}_won`
   }
 
   // Проверка главных диагоналей
@@ -133,7 +133,7 @@ export const getGameState = (
       field[selectCell(pos1)] === field[selectCell(pos2)] &&
       field[selectCell(pos2)] === field[selectCell(pos3)]
     ) {
-      return shapeOwners[field[selectCell(pos1)]!]
+      return `${shapeOwners[field[selectCell(pos1)]!]}_won`
     }
   }
 
