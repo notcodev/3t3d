@@ -4,7 +4,9 @@ import { and, equals } from 'patronum'
 import { possiblePositions } from './constants'
 import { atom } from './fabrics/atom'
 import { GameState, Shape, StringifiedCellCoordinate } from './types'
+import { forEachValue } from './utils/for-each-value'
 import { getGameState } from './utils/get-game-state'
+import { reshapeRecordValues } from './utils/reshape-record-values'
 import { selectCell } from './utils/select-cell'
 
 export type Player1Shape = Extract<Shape, 'cross' | 'cylinder'>
@@ -75,12 +77,10 @@ export const gameModel = atom(() => {
     return acc
   }, {} as Field)
 
-  Object.values(field).forEach(({ moveDone }) => {
+  forEachValue(field, ({ moveDone }) => {
     sample({
       clock: moveDone,
-      source: Object.fromEntries(
-        Object.entries(field).map(([key, cell]) => [key, cell.$shape]),
-      ) as Record<StringifiedCellCoordinate, StoreWritable<Shape | null>>,
+      source: reshapeRecordValues(field, (cell) => cell.$shape),
       filter: equals($gameState, 'processing'),
       fn: (field) => getGameState(field, shapeOwners),
       target: $gameState,
