@@ -26,7 +26,7 @@ export const gameModel = atom(() => {
     const cellClicked = createEvent<Shape>()
     const $shape = createStore<Shape | null>(null)
 
-    const shapeAppliedSafely = sample({
+    const cellClickedSafely = sample({
       clock: cellClicked,
       source: { player: $currentPlayer },
       filter: ({ player }, shape) => {
@@ -36,7 +36,7 @@ export const gameModel = atom(() => {
     })
 
     const moveDone = sample({
-      clock: shapeAppliedSafely,
+      clock: cellClickedSafely,
       source: { player: $currentPlayer },
       filter: and(equals($gameState, 'processing'), equals($shape, null)),
       fn: ({ player }, shape) => ({
@@ -60,6 +60,7 @@ export const gameModel = atom(() => {
     return {
       $shape,
       cellClicked,
+      moveDone,
     }
   }
 
@@ -74,9 +75,9 @@ export const gameModel = atom(() => {
     return acc
   }, {} as Field)
 
-  Object.values(field).forEach(({ cellClicked }) => {
+  Object.values(field).forEach(({ moveDone }) => {
     sample({
-      clock: cellClicked,
+      clock: moveDone,
       source: Object.fromEntries(
         Object.entries(field).map(([key, cell]) => [key, cell.$shape]),
       ) as Record<StringifiedCellCoordinate, StoreWritable<Shape | null>>,
