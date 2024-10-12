@@ -77,10 +77,12 @@ export const gameModel = atom(() => {
     return acc
   }, {} as Field)
 
+  const reshapedField = reshapeRecordValues(field, (cell) => cell.$shape)
+
   forEachValue(field, ({ moveDone }) => {
     sample({
       clock: moveDone,
-      source: reshapeRecordValues(field, (cell) => cell.$shape),
+      source: reshapedField,
       filter: equals($gameState, 'processing'),
       fn: (field) => getGameState(field, shapeOwners),
       target: $gameState,
