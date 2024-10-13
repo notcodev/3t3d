@@ -54,6 +54,7 @@ export const gamesManagerModel = atom(() => {
       exodus: Exclude<GameState, 'processing'>
     }) => {
       gamesMap.delete(gameId)
+      await db.update(games).set({ status: exodus, finishedAt: new Date() })
     },
   )
 
