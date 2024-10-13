@@ -1,3 +1,5 @@
+import { db } from '@drizzle/connection'
+import { games } from '@drizzle/schema'
 import { GameState } from '@tic-tac-toe-3d/core'
 import { createEffect, createEvent, fork, sample, Scope } from 'effector'
 import { EventEmitter } from 'stream'
@@ -8,7 +10,7 @@ import { searchModel } from './search.model'
 
 export const gamesManagerModel = atom(() => {
   const eventEmitter = new EventEmitter()
-  const games = new Map<
+  const gamesMap = new Map<
     number,
     {
       scope: Scope
@@ -18,17 +20,27 @@ export const gamesManagerModel = atom(() => {
 
   const createGameFx = createEffect(
     async (participants: Record<`player${1 | 2}`, { id: number }>) => {
-      const scope = fork()
-      const gameId = 1
-      games.set(gameId, { scope, participants })
+      const insertedRows = await db
+        .insert(games)
+        .values({
+          player1Id: participants.player1.id,
+          player2Id: participants.player2.id,
+        })
+        .returning({ id: games.id })
+      const createdGame = insertedRows[0]
+
+      gamesMap.set(createdGame.id, {
+        scope: fork(),
+        participants,
+      })
 
       eventEmitter.emit(
         getGameCreatedEventName({ userId: participants.player1.id }),
-        { gameId, opponentId: participants.player2.id },
+        { gameId: createdGame.id, opponentId: participants.player2.id },
       )
       eventEmitter.emit(
         getGameCreatedEventName({ userId: participants.player2.id }),
-        { gameId, opponentId: participants.player1.id },
+        { gameId: createdGame.id, opponentId: participants.player1.id },
       )
     },
   )
@@ -41,7 +53,7 @@ export const gamesManagerModel = atom(() => {
       gameId: number
       exodus: Exclude<GameState, 'processing'>
     }) => {
-      games.delete(gameId)
+      gamesMap.delete(gameId)
     },
   )
 
@@ -70,7 +82,7 @@ export const gamesManagerModel = atom(() => {
   }
 
   return {
-    getGame: (gameId: number) => games.get(gameId),
+    getGame: (gameId: number) => gamesMap.get(gameId),
     onGameCreated,
     gameEnded,
   }
