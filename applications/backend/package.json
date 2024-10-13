@@ -10,6 +10,7 @@
   "dependencies": {
     "@fastify/cookie": "^11.0.1",
     "@fastify/websocket": "^11.0.1",
+    "@tic-tac-toe-3d/core": "workspace:*",
     "@trpc/server": "^10.45.2",
     "bcrypt": "^5.1.1",
     "drizzle-orm": "^0.34.1",
@@ -18,10 +19,10 @@
     "fastify-plugin": "^5.0.1",
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
+    "patronum": "^2.2.0",
     "pg": "^8.13.0",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8",
-    "@tic-tac-toe-3d/core": "workspace:*"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@swc-node/register": "1.10.3",
