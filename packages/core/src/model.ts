@@ -1,4 +1,4 @@
-import { createEvent, createStore, sample, StoreWritable } from 'effector'
+import { createEvent, createStore, sample } from 'effector'
 import { and, equals } from 'patronum'
 
 import { possiblePositions } from './constants'
