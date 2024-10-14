@@ -7,5 +7,5 @@
 - [x] Game managel
 - [x] Game processor
 - [ ] Multiplayer router
-- [ ] Move logic from routers to services
+- [x] Move logic from routers to services
 - [ ] Write tests for each procedure
