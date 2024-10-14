@@ -1,11 +1,7 @@
-import { db } from '@drizzle/connection'
-import { sessions } from '@drizzle/schema'
 import { TRPCError } from '@trpc/server'
-import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { globalConfig } from '@/configs/global.config'
-import { jwtBlacklistCache } from '@/infrastructure'
 import * as authService from '@/services/auth.service'
 import { authorizedProcedure, t } from '@/trpc'
 
