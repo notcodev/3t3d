@@ -79,7 +79,11 @@ export const gamesManagerModel = atom(() => {
   ) {
     const eventName = getGameCreatedEventName({ userId })
     eventEmitter.on(eventName, callback)
-    return () => eventEmitter.off(eventName, callback)
+    return {
+      unsubscribe() {
+        eventEmitter.off(eventName, callback)
+      },
+    }
   }
 
   return {

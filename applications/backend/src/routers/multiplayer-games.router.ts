@@ -40,12 +40,18 @@ export const multiplayerGamesRouter = t.router({
     return observable((emit) => {
       searchModel.playerJoinedToQueue({ id: session.userId })
 
-      gamesManagerModel.onGameCreated({ userId: session.userId }, (payload) => {
-        emit.next(payload)
-        emit.complete()
-      })
+      const subscription = gamesManagerModel.onGameCreated(
+        { userId: session.userId },
+        (payload) => {
+          emit.next(payload)
+          emit.complete()
+        },
+      )
 
-      return () => searchModel.playerLeftFromQueue({ id: session.userId })
+      return () => {
+        subscription.unsubscribe()
+        searchModel.playerLeftFromQueue({ id: session.userId })
+      }
     })
   }),
   move: playerProcedure

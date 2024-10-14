@@ -70,7 +70,11 @@ export const gameProcessorModel = atom(() => {
   ) {
     const eventName = getOpponentMoveEventName({ playerId: userId, gameId })
     eventEmitter.on(eventName, callback)
-    return () => eventEmitter.off(eventName, callback)
+    return {
+      unsubscribe() {
+        eventEmitter.off(eventName, callback)
+      },
+    }
   }
 
   return {
