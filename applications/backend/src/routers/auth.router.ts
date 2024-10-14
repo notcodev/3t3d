@@ -7,9 +7,9 @@ import * as uuid from 'uuid'
 import { z } from 'zod'
 
 import { globalConfig } from '@/configs/global.config'
+import { jwtBlacklistCache } from '@/infrastructure'
 import * as Jwt from '@/jwt'
 import { authorizedProcedure, t } from '@/trpc'
-import { jwtBlacklistCache } from '@/infrastructure'
 
 export const authRouter = t.router({
   login: t.procedure
