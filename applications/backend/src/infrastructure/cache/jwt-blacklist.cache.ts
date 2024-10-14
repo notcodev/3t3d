@@ -1,6 +1,8 @@
 import Redis from 'ioredis'
-import { redisClient } from './client'
+
 import { globalConfig } from '@/configs/global.config'
+
+import { redisClient } from './client'
 
 class JwtBlacklistCache {
   private readonly prefix = 'jwt-blacklist:'
