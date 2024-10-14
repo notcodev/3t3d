@@ -1,16 +1,13 @@
 import { db } from '@drizzle/connection'
-import { sessions, users } from '@drizzle/schema'
+import { sessions } from '@drizzle/schema'
 import { TRPCError } from '@trpc/server'
-import bcrypt from 'bcrypt'
 import { eq } from 'drizzle-orm'
-import * as uuid from 'uuid'
 import { z } from 'zod'
 
 import { globalConfig } from '@/configs/global.config'
 import { jwtBlacklistCache } from '@/infrastructure'
-import * as Jwt from '@/jwt'
-import { authorizedProcedure, t } from '@/trpc'
 import * as authService from '@/services/auth.service'
+import { authorizedProcedure, t } from '@/trpc'
 
 export const authRouter = t.router({
   login: t.procedure
