@@ -141,3 +141,10 @@ export async function refresh({ refreshToken }: { refreshToken: string }) {
 
   return { accessToken: newAccessToken, refreshToken: newRefreshToken }
 }
+
+export async function logout({ jti }: { jti: string }) {
+  await db.transaction(async (tx) => {
+    await tx.delete(sessions).where(eq(sessions.tokensId, jti))
+    await jwtBlacklistCache.add(jti)
+  })
+}

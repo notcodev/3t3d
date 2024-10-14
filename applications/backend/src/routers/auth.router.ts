@@ -79,10 +79,7 @@ export const authRouter = t.router({
     return { accessToken }
   }),
   logout: authorizedProcedure.mutation(async ({ ctx }) => {
-    await db.transaction(async (tx) => {
-      await tx.delete(sessions).where(eq(sessions.tokensId, ctx.session.jti))
-      await jwtBlacklistCache.add(ctx.session.jti)
-    })
+    await authService.logout({ jti: ctx.session.jti })
 
     ctx.res.clearCookie('refresh_token')
 
