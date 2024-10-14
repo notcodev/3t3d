@@ -1,8 +1,7 @@
-import { globalConfig } from '@/configs/global.config'
-import { db } from '@drizzle/connection'
 import fp from 'fastify-plugin'
-import * as Jwt from '@/jwt'
+
 import { jwtBlacklistCache } from '@/infrastructure'
+import * as Jwt from '@/jwt'
 
 declare module 'fastify' {
   interface FastifyRequest {
