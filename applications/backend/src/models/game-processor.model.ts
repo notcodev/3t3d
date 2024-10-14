@@ -5,7 +5,7 @@ import {
   Shape,
 } from '@tic-tac-toe-3d/core'
 import { allSettled } from 'effector'
-import { EventEmitter } from 'node:stream'
+import { EventEmitter } from 'node:events'
 
 import { atom } from '@/fabrics/atom'
 
