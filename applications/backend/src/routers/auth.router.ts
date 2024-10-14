@@ -64,48 +64,12 @@ export const authRouter = t.router({
       throw new TRPCError({ code: 'FORBIDDEN' })
     }
 
-    const verifyTokenResult = Jwt.verifyRefresh(refreshTokenUnsignResult.value)
-
-    if (!verifyTokenResult.valid) {
-      ctx.res.clearCookie('refresh_token')
-      throw new TRPCError({ code: 'FORBIDDEN' })
-    }
-
-    const selectedRows = await db
-      .select()
-      .from(sessions)
-      .where(eq(sessions.tokensId, verifyTokenResult.payload.jti))
-
-    if (selectedRows.length === 0) {
-      ctx.res.clearCookie('refresh_token')
-      throw new TRPCError({ code: 'FORBIDDEN' })
-    }
-
-    const sessionEntry = selectedRows[0]
-
-    const newJti = uuid.v7()
-    const accessToken = Jwt.signAccess({
-      jti: newJti,
-      sub: verifyTokenResult.payload.sub,
-    })
-    const refreshToken = Jwt.signRefresh({
-      jti: newJti,
-      sub: verifyTokenResult.payload.sub,
-    })
-
-    await db.transaction(async (tx) => {
-      await tx
-        .update(sessions)
-        .set({
-          tokensId: newJti,
-          refreshedAt: new Date(),
-          expiresAt: new Date(
-            Date.now() + globalConfig.security.refreshTokenLifetime * 1000,
-          ),
-        })
-        .where(eq(sessions.id, sessionEntry.id))
-      await jwtBlacklistCache.add(verifyTokenResult.payload.jti)
-    })
+    const { accessToken, refreshToken } = await authService
+      .refresh({ refreshToken: refreshTokenUnsignResult.value })
+      .catch((error) => {
+        ctx.res.clearCookie('refresh_token')
+        return Promise.reject(error)
+      })
 
     ctx.res.setCookie('refresh_token', refreshToken, {
       maxAge: globalConfig.security.refreshTokenLifetime,

@@ -7,6 +7,7 @@ import * as uuid from 'uuid'
 
 import { globalConfig } from '@/configs/global.config'
 import * as Jwt from '@/jwt'
+import { jwtBlacklistCache } from '@/infrastructure'
 
 export async function login({
   username,
@@ -94,4 +95,49 @@ export async function signUp({
     })
 
   return insertedRows[0]
+}
+
+export async function refresh({ refreshToken }: { refreshToken: string }) {
+  const verifyTokenResult = Jwt.verifyRefresh(refreshToken)
+
+  if (!verifyTokenResult.valid) {
+    throw new TRPCError({ code: 'FORBIDDEN' })
+  }
+
+  const selectedRows = await db
+    .select()
+    .from(sessions)
+    .where(eq(sessions.tokensId, verifyTokenResult.payload.jti))
+
+  if (selectedRows.length === 0) {
+    throw new TRPCError({ code: 'FORBIDDEN' })
+  }
+
+  const sessionEntry = selectedRows[0]
+
+  const newJti = uuid.v7()
+  const newAccessToken = Jwt.signAccess({
+    jti: newJti,
+    sub: verifyTokenResult.payload.sub,
+  })
+  const newRefreshToken = Jwt.signRefresh({
+    jti: newJti,
+    sub: verifyTokenResult.payload.sub,
+  })
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(sessions)
+      .set({
+        tokensId: newJti,
+        refreshedAt: new Date(),
+        expiresAt: new Date(
+          Date.now() + globalConfig.security.refreshTokenLifetime * 1000,
+        ),
+      })
+      .where(eq(sessions.id, sessionEntry.id))
+    await jwtBlacklistCache.add(verifyTokenResult.payload.jti)
+  })
+
+  return { accessToken: newAccessToken, refreshToken: newRefreshToken }
 }
