@@ -6,8 +6,8 @@ import { eq } from 'drizzle-orm'
 import * as uuid from 'uuid'
 
 import { globalConfig } from '@/configs/global.config'
-import * as Jwt from '@/jwt'
 import { jwtBlacklistCache } from '@/infrastructure'
+import * as Jwt from '@/jwt'
 
 export async function login({
   username,
