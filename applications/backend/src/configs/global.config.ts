@@ -1,18 +1,19 @@
 import { Config } from './config.interface'
+import { env } from './env'
 
 export const globalConfig: Config = {
   fastify: {
-    host: process.env.NODE_ENV === 'development' ? 'localhost' : '0.0.0.0',
-    port: 3000,
+    host: env.WEB_SERVER_HOST,
+    port: env.WEB_SERVER_PORT,
   },
   security: {
-    cookiesSecret: process.env.COOKIES_SECRET!,
-    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET!,
-    accessTokenLifetime: 30 * 60, // seconds
-    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET!,
-    refreshTokenLifetime: 30 * 24 * 60 * 60, // seconds
+    cookiesSecret: env.COOKIES_SECRET,
+    accessTokenSecret: env.JWT_ACCESS_SECRET,
+    accessTokenLifetime: 30 * 60,
+    refreshTokenSecret: env.JWT_REFRESH_SECRET,
+    refreshTokenLifetime: 30 * 24 * 60 * 60,
   },
   redis: {
-    url: process.env.REDIS_URL!,
+    url: env.REDIS_URL,
   },
 }
