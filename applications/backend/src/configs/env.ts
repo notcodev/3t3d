@@ -7,6 +7,6 @@ export const env = cleanEnv(process.env, {
   JWT_ACCESS_SECRET: str(),
   JWT_REFRESH_SECRET: str(),
   COOKIES_SECRET: str(),
-  WEB_SERVER_HOST: host({ default: '0.0.0.0' }),
+  WEB_SERVER_HOST: host({ default: '0.0.0.0', devDefault: 'localhost' }),
   WEB_SERVER_PORT: port({ default: 3000 }),
 })

@@ -7,6 +7,7 @@ import {
 import { fastify } from 'fastify'
 
 import { globalConfig } from './configs/global.config'
+import { loggerConfig } from './configs/logger.config'
 import { createContext } from './context'
 import { authorizationPlugin } from './plugins/authorization.plugin'
 import { fastifyTRPCInjectorPlugin } from './plugins/fastify-trpc-injector.plugin'
@@ -15,6 +16,7 @@ import { AppRouter, appRouter } from './routers'
 export async function buildFastify() {
   const app = fastify({
     maxParamLength: 5000,
+    logger: loggerConfig,
   })
 
   app.register(fastifyCookie, { secret: globalConfig.security.cookiesSecret })

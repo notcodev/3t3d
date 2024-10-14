@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "NODE_ENV=development nodemon src/server.ts",
     "build": "tsc --noEmit && swc src -d dist --strip-leading-paths"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
     "@types/pg": "^8.11.10",
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.5",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "pino-pretty": "^11.2.2"
   }
 }
