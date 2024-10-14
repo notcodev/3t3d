@@ -1,29 +1,20 @@
-import { db } from '@drizzle/connection'
-import { games } from '@drizzle/schema'
 import { PossiblePosition } from '@tic-tac-toe-3d/core'
 import { TRPCError } from '@trpc/server'
 import { observable } from '@trpc/server/observable'
-import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import { gameProcessorModel } from '@/models/game-processor.model'
 import { gamesManagerModel } from '@/models/games-manager.model'
 import { searchModel } from '@/models/search.model'
+import * as multiplayerGamesService from '@/services/multiplayer-games.service'
 import { authorizedProcedure, t } from '@/trpc'
 
 const playerProcedure = authorizedProcedure
   .input(z.object({ gameId: z.number().int().positive() }))
   .use(async ({ next, ctx: { session }, input }) => {
-    const selectedRows = await db
-      .select()
-      .from(games)
-      .where(eq(games.id, input.gameId))
-
-    if (selectedRows.length === 0) {
-      throw new TRPCError({ code: 'NOT_FOUND' })
-    }
-
-    const gameEntry = selectedRows[0]
+    const gameEntry = await multiplayerGamesService.getGameById({
+      id: input.gameId,
+    })
 
     if (
       gameEntry.player1Id !== session.userId &&
