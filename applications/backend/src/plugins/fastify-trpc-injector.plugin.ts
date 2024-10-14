@@ -25,6 +25,7 @@ type DecoratedProcedureRecord<TProcedures extends ProcedureRouterRecord> = {
 }
 
 // Generic here is used to infer output response type
+// eslint-disable-next-line @typescript-eslint/naming-convention
 type InjectConfig<_T extends AnyProcedure> = {
   url: string
   headers?: { 'content-type': string }
@@ -53,7 +54,7 @@ type TRPCInjectorResponse<TProcedure extends AnyProcedure> = Omit<
 > & {
   json: () => {
     result: ProcedureOutput<TProcedure> extends void
-      ? {}
+      ? Record<string, never>
       : { data: ProcedureOutput<TProcedure> }
   }
 }
@@ -150,6 +151,7 @@ export const fastifyTRPCInjectorPlugin = fp(
 
               return null!
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ) as any,
         )
         let injectOptions: InjectOptions = injectConfig
