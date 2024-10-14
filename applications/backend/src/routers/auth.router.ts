@@ -47,35 +47,9 @@ export const authRouter = t.router({
         password: z.string().min(8).max(64),
       }),
     )
-    .mutation(
-      async ({ input: { username, firstName, lastName, password } }) => {
-        const candidates = await db
-          .select()
-          .from(users)
-          .where(eq(users.username, username))
-
-        if (candidates.length > 0) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'USERNAME_EXIST',
-          })
-        }
-
-        const passwordHash = await bcrypt.hash(password, 7)
-        const insertedRows = await db
-          .insert(users)
-          .values({ username, firstName, lastName, passwordHash })
-          .returning({
-            id: users.id,
-            username: users.username,
-            firstName: users.firstName,
-            lastName: users.lastName,
-            createdAt: users.createdAt,
-          })
-
-        return insertedRows[0]
-      },
-    ),
+    .mutation(async ({ input }) => {
+      return authService.signUp(input)
+    }),
   refresh: t.procedure.mutation(async ({ ctx }) => {
     if (!ctx.req.cookies.refresh_token) {
       throw new TRPCError({ code: 'FORBIDDEN' })
