@@ -10,6 +10,7 @@ import { globalConfig } from '@/configs/global.config'
 import { jwtBlacklistCache } from '@/infrastructure'
 import * as Jwt from '@/jwt'
 import { authorizedProcedure, t } from '@/trpc'
+import * as authService from '@/services/auth.service'
 
 export const authRouter = t.router({
   login: t.procedure
@@ -20,40 +21,11 @@ export const authRouter = t.router({
       }),
     )
     .mutation(async ({ input: { username, password }, ctx }) => {
-      const selectedRows = await db
-        .select()
-        .from(users)
-        .where(eq(users.username, username))
-
-      if (selectedRows.length === 0) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'INVALID_USERNAME_OR_PASSWORD',
-        })
-      }
-
-      const user = selectedRows[0]
-      const isPasswordValid = await bcrypt.compare(password, user.passwordHash)
-
-      if (!isPasswordValid) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'INVALID_USERNAME_OR_PASSWORD',
-        })
-      }
-
-      const jti = uuid.v7()
-      const accessToken = Jwt.signAccess({ jti, sub: user.id.toString() })
-      const refreshToken = Jwt.signRefresh({ jti, sub: user.id.toString() })
-
-      await db.insert(sessions).values({
-        userId: user.id,
-        tokensId: jti,
+      const { accessToken, refreshToken } = await authService.login({
+        username,
+        password,
         ip: ctx.req.ip,
         userAgent: ctx.req.headers['user-agent'],
-        expiresAt: new Date(
-          Date.now() + globalConfig.security.refreshTokenLifetime * 1000,
-        ),
       })
 
       ctx.res.setCookie('refresh_token', refreshToken, {
