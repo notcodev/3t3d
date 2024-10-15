@@ -85,7 +85,10 @@ export interface FastiyfyTRPCInjector<TRouter extends AnyRouter> {
 declare module 'fastify' {
   interface FastifyInstance {
     injectTRPC: FastiyfyTRPCInjector<AnyRouter>
-    withTypedTRPCInjector: <TRouter extends AnyRouter>() => FastifyInstance & {
+    withTypedTRPCInjector: <TRouter extends AnyRouter>() => Omit<
+      FastifyInstance,
+      'injectTRPC'
+    > & {
       injectTRPC: FastiyfyTRPCInjector<TRouter>
     }
   }
@@ -180,6 +183,10 @@ export const fastifyTRPCInjectorPlugin = fp(
           injectOptions = {
             ...injectOptions,
             ...callbackOrOptions,
+            headers: {
+              ...(injectOptions.headers || {}),
+              ...(callbackOrOptions.headers || {}),
+            },
           }
 
           return inject(injectOptions, callback)
