@@ -3,11 +3,11 @@ import { spread } from 'patronum'
 
 import { atom } from '@/fabrics/atom'
 
-export const searchModel = atom(() => {
-  interface PlayerEntry {
-    id: number
-  }
+interface PlayerEntry {
+  id: number
+}
 
+export const searchModel = atom(() => {
   const participantsFound = createEvent<Record<`player${1 | 2}`, PlayerEntry>>()
   const playerJoinedToQueue = createEvent<PlayerEntry>()
   const playerLeftFromQueue = createEvent<PlayerEntry>()

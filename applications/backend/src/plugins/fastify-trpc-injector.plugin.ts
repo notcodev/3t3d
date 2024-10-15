@@ -66,21 +66,15 @@ interface TRPCInjectorRequestCallback<TProcedure extends AnyProcedure> {
   ): void
 }
 
-interface FastiyfyTRPCInjector<TRouter extends AnyRouter> {
+export interface FastiyfyTRPCInjector<TRouter extends AnyRouter> {
   <TProcedure extends AnyProcedure>(
     getInjectConfig: InjectConfigGetter<TRouter, TProcedure>,
     options?: TRPCInjectOptions,
   ): Promise<TRPCInjectorResponse<TProcedure>>
-}
-
-interface FastiyfyTRPCInjector<TRouter extends AnyRouter> {
   <TProcedure extends AnyProcedure>(
     getInjectConfig: InjectConfigGetter<TRouter, TProcedure>,
     callback: TRPCInjectorRequestCallback<TProcedure>,
   ): void
-}
-
-interface FastiyfyTRPCInjector<TRouter extends AnyRouter> {
   <TProcedure extends AnyProcedure>(
     getInjectConfig: InjectConfigGetter<TRouter, TProcedure>,
     options: TRPCInjectOptions,

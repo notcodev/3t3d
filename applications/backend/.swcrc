@@ -10,7 +10,8 @@
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@drizzle/*": ["drizzle/*"]
     },
     "transform": {
       "legacyDecorator": true,

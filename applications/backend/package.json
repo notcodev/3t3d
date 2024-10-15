@@ -3,9 +3,16 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "module": "dist/app/src/server.js",
+  "types": "dist/types/src/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/server.ts",
-    "build": "tsc --noEmit && swc src -d dist --strip-leading-paths"
+    "build": "shx rm -rf dist/app && tsc --noEmit && swc src -d dist/app",
+    "watch:trpc": "nodemon -w src -w drizzle --exec pnpm build:types",
+    "build:types": "shx rm -rf dist/types && tsc -p tsconfig.types.json && tsc-alias"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.1",
@@ -27,12 +34,16 @@
   },
   "devDependencies": {
     "@swc-node/register": "1.10.3",
+    "@swc/cli": "0.4.1-nightly.20240914",
+    "@swc/core": "^1.7.35",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/pg": "^8.11.10",
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.5",
     "nodemon": "^3.1.7",
-    "pino-pretty": "^11.2.2"
+    "pino-pretty": "^11.2.2",
+    "shx": "^0.3.4",
+    "tsc-alias": "^1.8.10"
   }
 }

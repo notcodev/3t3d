@@ -7,7 +7,7 @@ import { gameProcessorModel } from '@/models/game-processor.model'
 import { gamesManagerModel } from '@/models/games-manager.model'
 import { searchModel } from '@/models/search.model'
 import * as multiplayerGamesService from '@/services/multiplayer-games.service'
-import { authorizedProcedure, t } from '@/trpc'
+import { authorizedProcedure, t } from '..//trpc'
 
 const playerProcedure = authorizedProcedure
   .input(z.object({ gameId: z.number().int().positive() }))

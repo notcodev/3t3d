@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { globalConfig } from '@/configs/global.config'
 import * as authService from '@/services/auth.service'
-import { authorizedProcedure, t } from '@/trpc'
+import { authorizedProcedure, t } from '../trpc'
 
 export const authRouter = t.router({
   login: t.procedure
