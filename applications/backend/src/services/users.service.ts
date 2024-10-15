@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm'
 
 import { atom } from '@/fabrics/atom'
 
-export const usersSerivce = atom(() => {
+export const usersService = atom(() => {
   async function getUserById({ id }: { id: number }) {
     const selectedRows = await db
       .select({
