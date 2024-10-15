@@ -2,7 +2,8 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { globalConfig } from '@/configs/global.config'
-import * as authService from '@/services/auth.service'
+import { authService } from '@/services'
+
 import { authorizedProcedure, t } from '../trpc'
 
 export const authRouter = t.router({

@@ -1,8 +1,8 @@
 import { connectToDatabase } from '@drizzle/connection'
 
 import { buildFastify } from './app'
-import { globalConfig } from './configs/global.config'
-import { redisConnect } from './infrastructure/cache/client'
+import { globalConfig } from './configs'
+import { redisConnect } from './infrastructure'
 
 const app = await buildFastify()
 

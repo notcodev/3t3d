@@ -1,4 +1,5 @@
-import * as usersService from '@/services/users.service'
+import { usersService } from '@/services'
+
 import { authorizedProcedure, t } from '../trpc'
 
 export const usersRouter = t.router({
