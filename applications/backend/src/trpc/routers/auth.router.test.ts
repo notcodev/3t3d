@@ -72,7 +72,7 @@ test('Procedure `auth.signUp` - create user failed cause of existing username wi
   const payload = response.json()
 
   if ('result' in payload) {
-    return t.fail('Response returned result, but result error')
+    return t.fail('Response returned result, but error expected')
   }
 
   t.equal(payload.error.data.httpStatus, 400)
@@ -129,4 +129,76 @@ test('Procedure `auth.login` - successfully user login with test database', asyn
     return t.fail('Refresh token cookie is invalid')
 
   t.equal(Jwt.verifyRefresh(unsignedRefreshTokenCookie.value).valid, true)
+})
+
+test('Procedure `auth.login` - failed user login with invalid username with test database', async (t) => {
+  const fastify = await buildFastify()
+
+  await db.insert(users).values({
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    username: faker.internet.userName(),
+    passwordHash: await bcrypt.hash(faker.internet.password(), 7),
+  })
+
+  t.teardown(async () => {
+    try {
+      await db.delete(users)
+    } catch (error) {
+      console.error('Error when trying to delete users')
+    }
+    await fastify.close()
+  })
+
+  const response = await fastify.injectTRPC((router) =>
+    router.auth.login({
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+    }),
+  )
+  const payload = response.json()
+
+  if ('result' in payload) {
+    return t.fail('Response returned result, but error expected')
+  }
+
+  t.equal(payload.error.data.httpStatus, 400)
+  t.equal(payload.error.message, 'INVALID_USERNAME_OR_PASSWORD')
+})
+
+test('Procedure `auth.login` - failed user login with invalid password with test database', async (t) => {
+  const fastify = await buildFastify()
+
+  const username = faker.internet.userName()
+
+  await db.insert(users).values({
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    username,
+    passwordHash: await bcrypt.hash(faker.internet.password(), 7),
+  })
+
+  t.teardown(async () => {
+    try {
+      await db.delete(users)
+    } catch (error) {
+      console.error('Error when trying to delete users')
+    }
+    await fastify.close()
+  })
+
+  const response = await fastify.injectTRPC((router) =>
+    router.auth.login({
+      username,
+      password: faker.internet.password(),
+    }),
+  )
+  const payload = response.json()
+
+  if ('result' in payload) {
+    return t.fail('Response returned result, but error expected')
+  }
+
+  t.equal(payload.error.data.httpStatus, 400)
+  t.equal(payload.error.message, 'INVALID_USERNAME_OR_PASSWORD')
 })
