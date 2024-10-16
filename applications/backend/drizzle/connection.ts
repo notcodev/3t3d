@@ -25,5 +25,9 @@ const connectToDatabase = async (
   )
 }
 
+export const disconnectFromDatabase = async () => {
+  await pool.end()
+}
+
 const db = drizzle(pool, { schema, casing: 'snake_case' })
 export { connectToDatabase, db }

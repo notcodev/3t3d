@@ -3,7 +3,6 @@ import {
   bigserial,
   pgEnum,
   pgTable,
-  serial,
   timestamp,
   uuid,
   varchar,
@@ -17,36 +16,36 @@ export const gameStatus = pgEnum('game_status', [
 ])
 
 export const users = pgTable('users', {
-  id: bigserial({ mode: 'number' }).primaryKey(),
-  firstName: varchar({ length: 64 }).notNull(),
-  lastName: varchar({ length: 64 }),
-  username: varchar({ length: 32 }).notNull().unique(),
-  passwordHash: varchar({ length: 60 }).notNull(),
-  createdAt: timestamp().defaultNow().notNull(),
+  id: bigserial('id', { mode: 'number' }).primaryKey(),
+  firstName: varchar('first_name', { length: 64 }).notNull(),
+  lastName: varchar('last_name', { length: 64 }),
+  username: varchar('username', { length: 32 }).notNull().unique(),
+  passwordHash: varchar('password_hash', { length: 60 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
 export const sessions = pgTable('sessions', {
-  id: serial().primaryKey(),
-  tokensId: uuid().notNull().unique(),
-  userId: bigint({ mode: 'number' })
+  id: bigserial('id', { mode: 'number' }).primaryKey(),
+  tokensId: uuid('tokens_id').notNull().unique(),
+  userId: bigint('user_id', { mode: 'number' })
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
-  ip: varchar({ length: 16 }).notNull(),
-  userAgent: varchar({ length: 255 }),
-  expiresAt: timestamp().notNull(),
-  refreshedAt: timestamp().defaultNow().notNull(),
-  createdAt: timestamp().defaultNow().notNull(),
+  ip: varchar('ip', { length: 16 }).notNull(),
+  userAgent: varchar('user_agent', { length: 255 }),
+  expiresAt: timestamp('expires_at').notNull(),
+  refreshedAt: timestamp('refreshed_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
 export const games = pgTable('games', {
-  id: serial().primaryKey(),
-  player1Id: bigint({ mode: 'number' })
+  id: bigserial('id', { mode: 'number' }).primaryKey(),
+  player1Id: bigint('player1_id', { mode: 'number' })
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
-  player2Id: bigint({ mode: 'number' })
+  player2Id: bigint('player2_id', { mode: 'number' })
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
-  status: gameStatus().default('processing'),
-  finishedAt: timestamp(),
-  startedAt: timestamp().defaultNow().notNull(),
+  status: gameStatus('status').default('processing'),
+  finishedAt: timestamp('finished_at'),
+  startedAt: timestamp('started_at').defaultNow().notNull(),
 })
