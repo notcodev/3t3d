@@ -48,20 +48,35 @@ type TRPCInjectOptions = Omit<
   'path' | 'url' | 'query' | 'method' | 'payload' | 'body'
 >
 
+interface TRPCSuccessfullPayload<TProcedure extends AnyProcedure> {
+  result: ProcedureOutput<TProcedure> extends void
+    ? Record<string, never>
+    : { data: ProcedureOutput<TProcedure> }
+}
+
+interface TRPCErrorPayload {
+  error: {
+    message: string
+    code: number
+    data: {
+      code: string
+      httpStatus: number
+      stack: string
+      path: string
+    }
+  }
+}
+
 type TRPCInjectorResponse<TProcedure extends AnyProcedure> = Omit<
   LightMyRequestResponse,
   'json'
 > & {
-  json: () => {
-    result: ProcedureOutput<TProcedure> extends void
-      ? Record<string, never>
-      : { data: ProcedureOutput<TProcedure> }
-  }
+  json: () => TRPCSuccessfullPayload<TProcedure> | TRPCErrorPayload
 }
 
 interface TRPCInjectorRequestCallback<TProcedure extends AnyProcedure> {
   (
-    err: Error | undefined,
+    error: Error | undefined,
     response: TRPCInjectorResponse<TProcedure> | undefined,
   ): void
 }
@@ -117,6 +132,7 @@ export const fastifyTRPCInjectorPlugin = fp(
             ({ path, args }): InjectConfig<AnyProcedure> => {
               const fullPath = path.join('.')
               const procedure = def.procedures[fullPath] as AnyProcedure
+              const url = prefix + '/' + fullPath
 
               let type: ProcedureType = 'query'
               if (procedure._def.mutation) {
@@ -128,7 +144,7 @@ export const fastifyTRPCInjectorPlugin = fp(
               switch (type) {
                 case 'query':
                   return {
-                    url: [prefix, ...path].join('/'),
+                    url,
                     query: querystring.stringify({
                       input: JSON.stringify(args[0]), // TODO: Add superjson support
                     }),
@@ -136,7 +152,7 @@ export const fastifyTRPCInjectorPlugin = fp(
                   }
                 case 'mutation':
                   return {
-                    url: [prefix, ...path].join('/'),
+                    url,
                     body: JSON.stringify(args[0]), // TODO: Add superjson support
                     method: 'POST',
                     headers: { 'content-type': 'application/json' },
