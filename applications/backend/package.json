@@ -3,16 +3,24 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "module": "dist/app/src/server.js",
-  "types": "dist/types/src/index.d.ts",
+  "module": "dist/src/server.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
-    "dev": "NODE_ENV=development nodemon src/server.ts",
-    "build": "shx rm -rf dist/app && tsc --noEmit && swc src -d dist/app",
+    "dev": "NODE_ENV=development dotenvx run --env-file=.env.development -- nodemon src/server.ts",
+    "test": "NODE_ENV=test dotenvx run --env-file=.env.test -- tap --node-arg=--import=@swc-node/register/esm-register src/**/*.test.ts",
+    "build": "shx rm -rf dist && tsc && swc src drizzle -d dist",
     "watch:trpc": "nodemon -w src -w drizzle --exec pnpm build:types",
-    "build:types": "shx rm -rf dist/types && tsc -p tsconfig.types.json && tsc-alias"
+    "build:types": "shx rm -rf dist/index.d.ts && rollup -c",
+    "migration:generate": "drizzle-kit generate",
+    "migration:push": "node --import=@swc-node/register/esm-register drizzle/migrate.ts"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.1",
@@ -33,6 +41,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.19.3",
+    "@faker-js/faker": "^9.0.3",
     "@swc-node/register": "1.10.3",
     "@swc/cli": "0.4.1-nightly.20240914",
     "@swc/core": "^1.7.35",
@@ -41,9 +51,14 @@
     "@types/pg": "^8.11.10",
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.25.0",
     "nodemon": "^3.1.7",
+    "pino": "^9.5.0",
     "pino-pretty": "^11.2.2",
+    "rollup": "^4.24.0",
+    "rollup-plugin-dts": "^6.1.1",
     "shx": "^0.3.4",
+    "tap": "^21.0.1",
     "tsc-alias": "^1.8.10"
   }
 }

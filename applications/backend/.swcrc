@@ -27,5 +27,6 @@
     "importInterop": "swc",
     "resolveFully": true
   },
+  "minify": true,
   "isModule": true
 }

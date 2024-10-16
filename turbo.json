@@ -6,6 +6,7 @@
       "dependsOn": ["^build"]
     },
     "dev": {},
+    "test": {},
     "app#watch": {
       "dependsOn": ["^build"]
     },

@@ -4,6 +4,6 @@
   "exitcrash": false,
   "ignore": ["*.test.ts"],
   "execMap": {
-    "ts": "node --import @swc-node/register/esm-register -r dotenv/config"
+    "ts": "node --import @swc-node/register/esm-register"
   }
 }
