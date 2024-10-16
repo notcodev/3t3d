@@ -18,3 +18,5 @@ app.listen(
     process.exit(1)
   },
 )
+
+export type { AppRouter } from './trpc'
