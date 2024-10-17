@@ -33,5 +33,12 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "vite": "^5.2.0"
+  },
+  "lint-staged": {
+    "*.js": "prettier --write",
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --no-error-on-unmatched-pattern --fix"
+    ]
   }
 }
