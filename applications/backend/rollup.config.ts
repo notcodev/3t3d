@@ -1,6 +1,7 @@
+import { RollupOptions } from 'rollup'
 import dts from 'rollup-plugin-dts'
 
-const rollupConfig = {
+const rollupConfig: RollupOptions = {
   input: './src/server.ts',
   output: {
     file: 'dist/index.d.ts',

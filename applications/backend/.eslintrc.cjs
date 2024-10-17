@@ -6,7 +6,10 @@ module.exports = configure({
   extends: path.resolve(__dirname, '../../base.eslintrc.cjs'),
   extend: {
     parserOptions: {
-      project: path.resolve(__dirname, 'tsconfig.json'),
+      project: [
+        path.resolve(__dirname, 'tsconfig.json'),
+        path.resolve(__dirname, 'tsconfig.node.json'),
+      ],
     },
   },
   presets: [

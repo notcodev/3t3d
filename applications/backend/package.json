@@ -18,7 +18,7 @@
     "test": "NODE_ENV=test dotenvx run --env-file=.env.test -- tap --node-arg=--import=@swc-node/register/esm-register src/**/*.test.ts",
     "build": "shx rm -rf dist && tsc && swc src drizzle -d dist",
     "watch:trpc": "nodemon -w src -w drizzle --exec pnpm build:types",
-    "build:types": "shx rm -rf dist/index.d.ts && rollup -c",
+    "build:types": "shx rm -rf dist/index.d.ts && rollup -c --configPlugin @rollup/plugin-typescript",
     "lint": "eslint . --ext ts --no-error-on-unmatched-pattern --fix",
     "migration:generate": "drizzle-kit generate",
     "migration:push": "node --import=@swc-node/register/esm-register drizzle/migrate.ts"
@@ -44,6 +44,7 @@
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.19.3",
     "@faker-js/faker": "^9.0.3",
+    "@rollup/plugin-typescript": "^12.1.1",
     "@swc-node/register": "1.10.3",
     "@swc/cli": "0.4.1-nightly.20240914",
     "@swc/core": "^1.7.35",
