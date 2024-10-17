@@ -19,6 +19,7 @@
     "build": "shx rm -rf dist && tsc && swc src drizzle -d dist",
     "watch:trpc": "nodemon -w src -w drizzle --exec pnpm build:types",
     "build:types": "shx rm -rf dist/index.d.ts && rollup -c",
+    "lint": "eslint . --ext ts --no-error-on-unmatched-pattern --fix",
     "migration:generate": "drizzle-kit generate",
     "migration:push": "node --import=@swc-node/register/esm-register drizzle/migrate.ts"
   },
@@ -60,5 +61,12 @@
     "shx": "^0.3.4",
     "tap": "^21.0.1",
     "tsc-alias": "^1.8.10"
+  },
+  "lint-staged": {
+    "*.js": "prettier --write",
+    "*.ts": [
+      "prettier --write",
+      "eslint --no-error-on-unmatched-pattern --fix"
+    ]
   }
 }

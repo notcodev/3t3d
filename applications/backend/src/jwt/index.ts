@@ -1,5 +1,6 @@
-import { globalConfig } from '@/configs/global.config'
 import Jwt from 'jsonwebtoken'
+
+import { globalConfig } from '@/configs/global.config'
 
 export interface TokenPayload {
   jti: string
