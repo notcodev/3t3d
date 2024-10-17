@@ -26,5 +26,12 @@
       "require": "./dist/cjs/index.js",
       "types": "./dist/index.d.ts"
     }
+  },
+  "lint-staged": {
+    "*.js": "prettier --write",
+    "*.ts": [
+      "prettier --write",
+      "eslint --no-error-on-unmatched-pattern --fix"
+    ]
   }
 }
