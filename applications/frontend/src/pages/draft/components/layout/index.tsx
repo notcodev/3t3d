@@ -3,7 +3,7 @@ import { Maximize2, Minimize2, Rotate3D } from 'lucide-react'
 import { PropsWithChildren } from 'react'
 
 import { Shape } from '@/shared/types/game'
-import { Button } from '@/shared/ui/button'
+import { Button } from '@/shared/ui/toggle-button'
 
 import { useAutoRotateContextState } from '../../contexts/autorotate'
 import { useExpandContextState } from '../../contexts/expand'
