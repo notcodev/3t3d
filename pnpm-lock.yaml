@@ -65,6 +65,9 @@ importers:
       fastify:
         specifier: ^5.0.0
         version: 5.0.0
+      fastify-inject-trpc:
+        specifier: ^0.1.1
+        version: 0.1.1(@trpc/server@10.45.2)(fastify@5.0.0)
       fastify-plugin:
         specifier: ^5.0.1
         version: 5.0.1
@@ -4133,6 +4136,15 @@ packages:
 
   fast-uri@3.0.2:
     resolution: {integrity: sha512-GR6f0hD7XXyNJa25Tb9BuIdN0tdr+0BMi6/CJPH3wJO1JjNG3n/VsSw38AwRdKZABm8lGbPfakLRkYzx2V9row==}
+
+  fastify-inject-trpc@0.1.1:
+    resolution: {integrity: sha512-QPjrLaZv7ZX5FGmljxe5SB4GbVeF6kNPRj6L0SegqdZ6ao5Dn4bAlAKyuwL9V2HX4fWYWJ+dDy8pgEDaX2Qmnw==}
+    peerDependencies:
+      '@trpc/server': ^10.45.0
+      fastify: ^5.0.0
+
+  fastify-plugin@5.0.0:
+    resolution: {integrity: sha512-0725fmH/yYi8ugsjszLci+lLnGBK6cG+WSxM7edY2OXJEU7gr2JiGBoieL2h9mhTych1vFsEfXsAsGGDJ/Rd5w==}
 
   fastify-plugin@5.0.1:
     resolution: {integrity: sha512-HCxs+YnRaWzCl+cWRYFnHmeRFyR5GVnJTAaCJQiYzQSDwK9MgJdyAsuL3nh0EWRCYMgQ5MeziymvmAhUHYHDUQ==}
@@ -11417,6 +11429,14 @@ snapshots:
   fast-uri@2.4.0: {}
 
   fast-uri@3.0.2: {}
+
+  fastify-inject-trpc@0.1.1(@trpc/server@10.45.2)(fastify@5.0.0):
+    dependencies:
+      '@trpc/server': 10.45.2
+      fastify: 5.0.0
+      fastify-plugin: 5.0.0
+
+  fastify-plugin@5.0.0: {}
 
   fastify-plugin@5.0.1: {}
 

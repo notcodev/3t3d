@@ -33,6 +33,7 @@
     "effector": "^23.2.3",
     "envalid": "^8.0.0",
     "fastify": "^5.0.0",
+    "fastify-inject-trpc": "^0.1.1",
     "fastify-plugin": "^5.0.1",
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",

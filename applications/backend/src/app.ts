@@ -5,9 +5,10 @@ import {
   FastifyTRPCPluginOptions,
 } from '@trpc/server/adapters/fastify'
 import { fastify } from 'fastify'
+import fastifyInjectTRPCPlugin from 'fastify-inject-trpc'
 
 import { globalConfig, loggerConfig } from './configs'
-import { authorizationPlugin, fastifyTRPCInjectorPlugin } from './plugins'
+import { authorizationPlugin } from './plugins'
 import { type AppRouter, appRouter, createContext } from './trpc'
 
 export async function buildFastify() {
@@ -35,7 +36,7 @@ export async function buildFastify() {
       },
     } satisfies FastifyTRPCPluginOptions<AppRouter>['trpcOptions'],
   })
-  await app.register(fastifyTRPCInjectorPlugin, {
+  await app.register(fastifyInjectTRPCPlugin, {
     router: appRouter,
     prefix: '/trpc',
   })
