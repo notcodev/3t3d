@@ -1,4 +1,4 @@
-import { createRefStateContext } from '../lib/react'
+import { createRefStateContext } from '@/shared/lib/react'
 
 export const [
   AutoRotateContextProvider,

@@ -17,6 +17,10 @@ import {
   Object3DEventMap,
   Vector3,
 } from 'three'
+
+import { Shape } from '@/shared/types/game'
+import { selectCell } from '@/shared/utils/select-cell'
+
 import { Layout } from './components/layout'
 import {
   AutoRotateContextProvider,
@@ -24,8 +28,6 @@ import {
 } from './contexts/autorotate'
 import { ExpandContextProvider, useExpandContextRef } from './contexts/expand'
 import { model } from './model'
-import { Shape } from './types/game'
-import { selectCell } from './utils/select-cell'
 
 const BOX_SIZE = 1
 

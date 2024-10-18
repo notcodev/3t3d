@@ -1,10 +1,11 @@
 import { combine, createEvent, createStore, sample } from 'effector'
 import { and, equals } from 'patronum'
-import { possiblePositions } from './constants/game'
-import { atom } from './fabrics/atom'
-import { Shape } from './types/game'
-import { getGameState } from './utils/get-game-state'
-import { selectCell } from './utils/select-cell'
+
+import { possiblePositions } from '@/shared/constants/game'
+import { atom } from '@/shared/fabrics/atom'
+import { Shape } from '@/shared/types/game'
+import { getGameState } from '@/shared/utils/get-game-state'
+import { selectCell } from '@/shared/utils/select-cell'
 
 type Player1Shape = Extract<Shape, 'cross' | 'cylinder'>
 type Player2Shape = Extract<Shape, 'ring' | 'plus'>

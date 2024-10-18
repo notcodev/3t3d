@@ -1,11 +1,13 @@
 import { useUnit } from 'effector-react'
 import { Maximize2, Minimize2, Rotate3D } from 'lucide-react'
 import { PropsWithChildren } from 'react'
+
+import { Shape } from '@/shared/types/game'
+import { Button } from '@/shared/ui/button'
+
 import { useAutoRotateContextState } from '../../contexts/autorotate'
 import { useExpandContextState } from '../../contexts/expand'
 import { model } from '../../model'
-import { Shape } from '../../types/game'
-import { Button } from '../ui/button'
 import classes from './styles.module.css'
 
 const ExpandButton = () => {
