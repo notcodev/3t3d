@@ -4,10 +4,14 @@ const tailwindConfig = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+      spacing: {
+        pixel: {
+          DEFAULT: 'var(--pixel-size)',
+          2: 'calc(var(--pixel-size) * 2)',
+        },
+      },
+      borderWidth: {
+        pixel: 'var(--pixel-size)',
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -23,6 +27,8 @@ const tailwindConfig = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          highlight: 'hsl(var(--primary-highlight))',
+          shadow: 'hsl(var(--primary-shadow))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -39,16 +45,18 @@ const tailwindConfig = {
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
+          highlight: 'hsl(var(--destructive-highlight))',
+          shadow: 'hsl(var(--destructive-shadow))',
         },
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        chart: {
-          1: 'hsl(var(--chart-1))',
-          2: 'hsl(var(--chart-2))',
-          3: 'hsl(var(--chart-3))',
-          4: 'hsl(var(--chart-4))',
-          5: 'hsl(var(--chart-5))',
+        disabled: {
+          DEFAULT: 'hsl(var(--disabled))',
+          foreground: 'hsl(var(--disabled-foreground))',
+          highlight: 'hsl(var(--disabled-highlight))',
+          shadow: 'hsl(var(--disabled-shadow))',
+        },
+        border: {
+          DEFAULT: 'hsl(var(--border))',
+          disabled: 'hsl(var(--border-disabled))',
         },
       },
     },
