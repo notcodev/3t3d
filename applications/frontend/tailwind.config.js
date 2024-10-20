@@ -72,16 +72,6 @@ const tailwindConfig = {
             hover: 'hsl(var(--ui-destructive-color-dark-hover))',
           },
         },
-        disabled: {
-          DEFAULT: 'hsl(var(--disabled))',
-          foreground: 'hsl(var(--disabled-foreground))',
-          highlight: 'hsl(var(--disabled-highlight))',
-          shadow: 'hsl(var(--disabled-shadow))',
-        },
-        border: {
-          DEFAULT: 'hsl(var(--border))',
-          disabled: 'hsl(var(--border-disabled))',
-        },
       },
     },
   },
