@@ -4,7 +4,7 @@
 @tailwind utilities;
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 147 10% 42%;
     --foreground: 0 0% 3.9%;
 
     --card: 0 0% 100%;
@@ -18,8 +18,10 @@
     --primary-shadow: 109 39% 28%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 0 0% 73%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-highlight: 0 0% 84%;
+    --secondary-shadow: 0 0% 45%;
 
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -32,13 +34,13 @@
     --destructive-highlight: 12 92% 60%;
     --destructive-shadow: 342 68% 26%;
 
-    --disabled: 0 0% 73%;
-    --disabled-foreground: 0 0% 95%;
-    --disabled-highlight: 0 0% 84%;
-    --disabled-shadow: 0 0% 45%;
+    --disabled: 0 0% 82%;
+    --disabled-foreground: 0 0% 96%;
+    --disabled-highlight: 0 0% 92%;
+    --disabled-shadow: 0 0% 65%;
 
     --border: 0 0% 3.9%;
-    --border-disabled: 0 0% 38%;
+    --border-disabled: 0 0% 65%;
 
     --pixel-size: 0.125rem;
   }
@@ -86,6 +88,7 @@
 
   .pixel-border-base_after {
     content: '';
+    pointer-events: none;
     width: calc(100% - theme('spacing.pixel.DEFAULT') * 2);
     left: theme('spacing.pixel.DEFAULT');
     top: calc(-1 * theme('spacing.pixel.DEFAULT'));

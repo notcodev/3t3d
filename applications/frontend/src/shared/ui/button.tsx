@@ -15,18 +15,14 @@ const buttonVariants = cva(
           '[--basic:theme("colors.primary.DEFAULT")] [--highlight:theme("colors.primary.highlight")] [--shadow:theme("colors.primary.shadow")] [--border-color:theme("colors.border.DEFAULT")] bg-primary text-primary-foreground',
         destructive:
           '[--basic:theme("colors.destructive.DEFAULT")] [--highlight:theme("colors.destructive.highlight")] [--shadow:theme("colors.destructive.shadow")] [--border-color:theme("colors.border.DEFAULT")] bg-destructive text-destructive-foreground',
-        outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          '[--basic:theme("colors.secondary.DEFAULT")] [--highlight:theme("colors.secondary.highlight")] [--shadow:theme("colors.secondary.shadow")] [--border-color:theme("colors.border.DEFAULT")] bg-secondary text-secondary-foreground',
       },
       size: {
         default: 'h-8 px-4 py-2',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'h-10 w-10',
+        sm: 'h-6 px-3',
+        lg: 'h-10 px-5',
+        icon: 'h-8 w-10',
       },
     },
     defaultVariants: {

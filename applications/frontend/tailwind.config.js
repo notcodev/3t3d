@@ -33,6 +33,8 @@ const tailwindConfig = {
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
+          highlight: 'hsl(var(--secondary-highlight))',
+          shadow: 'hsl(var(--secondary-shadow))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
