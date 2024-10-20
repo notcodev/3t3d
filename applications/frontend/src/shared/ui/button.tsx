@@ -7,16 +7,12 @@ import { cn } from '@/shared/lib/shadcn/cn'
 type ButtonVariantProps = VariantProps<typeof buttonVariants>
 
 const buttonVariants = cva(
-  'pixel-border-clickable active:pixel-border-clickable__active inline-flex items-center justify-center gap-2 whitespace-nowrap text-xl font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-disabled disabled:[--basic:theme("colors.disabled.DEFAULT")] disabled:[--highlight:theme("colors.disabled.highlight")] disabled:[--shadow:theme("colors.disabled.shadow")] disabled:[--border-color:theme("colors.border.disabled")] disabled:text-disabled-foreground [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'pixel-border-clickable active:enabled:pixel-border-clickable__active inline-flex items-center justify-center gap-2 whitespace-nowrap text-xl font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
         default:
-          '[--basic:theme("colors.primary.DEFAULT")] [--highlight:theme("colors.primary.highlight")] [--shadow:theme("colors.primary.shadow")] [--border-color:theme("colors.border.DEFAULT")] bg-primary text-primary-foreground',
-        destructive:
-          '[--basic:theme("colors.destructive.DEFAULT")] [--highlight:theme("colors.destructive.highlight")] [--shadow:theme("colors.destructive.shadow")] [--border-color:theme("colors.border.DEFAULT")] bg-destructive text-destructive-foreground',
-        secondary:
-          '[--basic:theme("colors.secondary.DEFAULT")] [--highlight:theme("colors.secondary.highlight")] [--shadow:theme("colors.secondary.shadow")] [--border-color:theme("colors.border.DEFAULT")] bg-secondary text-secondary-foreground',
+          '[--basic:theme("colors.primary.filled.DEFAULT")] [--highlight:theme("colors.primary.light.DEFAULT")] [--shadow:theme("colors.primary.dark.DEFAULT")] [--border-color:theme("colors.black")] hover:enabled:[--basic:theme("colors.primary.filled.hover")] hover:enabled:[--highlight:theme("colors.primary.light.hover")] hover:enabled:[--shadow:theme("colors.primary.dark.hover")] bg-primary-filled text-white hover:enabled:bg-primary-filled-hover enabled:[text-shadow:_0.0625rem_0.125rem_hsla(var(--ui-color-black)_/_0.5)]',
       },
       size: {
         default: 'h-8 px-4 py-2',
