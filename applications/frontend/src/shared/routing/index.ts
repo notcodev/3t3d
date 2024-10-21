@@ -1,5 +1,5 @@
 import { NavigateOptions, Register } from '@tanstack/react-router'
-import { attach, createEvent, createStore } from 'effector'
+import { attach, createEvent, createStore, sample } from 'effector'
 
 import { atom } from '../fabrics/atom'
 
@@ -14,6 +14,11 @@ export const routingModel = atom(() => {
     effect: (router: AppRouter | null, options: NavigateOptions<AppRouter>) => {
       return router?.navigate(options)
     },
+  })
+
+  sample({
+    clock: attachRouter,
+    target: $router,
   })
 
   return {
