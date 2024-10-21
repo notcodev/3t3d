@@ -62,9 +62,6 @@
   }
 }
 @layer base {
-  * {
-    @apply border-border;
-  }
   html {
     font-size: 24px;
     font-family: 'Jersey 10';

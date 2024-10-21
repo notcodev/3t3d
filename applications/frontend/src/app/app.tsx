@@ -1,11 +1,22 @@
-import { Button } from '@/shared/ui'
+import { createRouter, RouterProvider } from '@tanstack/react-router'
+
+import { routingModel } from '@/shared/routing'
+
+import { routeTree } from './routeTree.gen'
+
+const router = createRouter({
+  routeTree,
+  notFoundMode: 'root',
+})
+
+routingModel.attachRouter(router)
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
+}
 
 export const App = () => {
-  return (
-    <div className="w-full h-screen flex justify-center items-center gap-4">
-      <Button variant="default">Click me</Button>
-      <Button variant="destructive">Don't click me!</Button>
-      <Button disabled>You can't click me ;)</Button>
-    </div>
-  )
+  return <RouterProvider router={router} />
 }
