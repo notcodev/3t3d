@@ -1,5 +1,5 @@
 {
-  "name": "tic-tac-toe-3d",
+  "name": "3t3d",
   "private": true,
   "engines": {
     "pnpm": ">=9.2.0"
