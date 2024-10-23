@@ -1,9 +1,4 @@
-import {
-  gameModel,
-  PossiblePosition,
-  selectCell,
-  Shape,
-} from '@tic-tac-toe-3d/core'
+import { gameModel, PossiblePosition, selectCell, Shape } from '@3t3d/core'
 import { allSettled } from 'effector'
 import { EventEmitter } from 'node:events'
 

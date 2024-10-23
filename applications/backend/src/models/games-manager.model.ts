@@ -1,6 +1,6 @@
+import { GameState } from '@3t3d/core'
 import { db } from '@drizzle/connection'
 import { games } from '@drizzle/schema'
-import { GameState } from '@tic-tac-toe-3d/core'
 import { createEffect, createEvent, fork, sample, Scope } from 'effector'
 import { EventEmitter } from 'node:events'
 
