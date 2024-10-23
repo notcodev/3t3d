@@ -1,5 +1,5 @@
 {
-  "name": "@tic-tac-toe-3d/frontend",
+  "name": "@3t3d/frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@tanstack/router-devtools": "^1.74.4",
     "@tanstack/router-plugin": "^1.74.2",
-    "@tic-tac-toe-3d/backend": "workspace:*",
+    "@3t3d/backend": "workspace:*",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/three": "^0.163.0",

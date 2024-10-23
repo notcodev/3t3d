@@ -1,5 +1,5 @@
 {
-  "name": "@tic-tac-toe-3d/core",
+  "name": "@3t3d/core",
   "version": "0.0.0",
   "description": "Common logic of the game",
   "main": "dist/cjs/index.js",
