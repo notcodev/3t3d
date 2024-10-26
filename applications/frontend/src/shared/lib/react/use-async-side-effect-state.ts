@@ -6,12 +6,18 @@ export function useAsyncSideEffectState<T>(
   initialValue: T,
   {
     beforeChange,
-  }: { beforeChange: (value: T) => Promise<unknown> | void | (() => void) },
+  }: {
+    beforeChange: (
+      value: T,
+      misc: { abort: () => void },
+    ) => Promise<unknown> | void | (() => void)
+  },
 ) {
   const latestBeforeChange = useLatest(beforeChange)
   const cleanUpRef = useRef<(() => void) | null>(null)
   const [state, setState] = useState(initialValue)
   const [isPending, setIsPending] = useState(false)
+  const isAborted = useRef(false)
 
   useEffect(() => {
     return () => cleanUpRef.current?.()
@@ -19,15 +25,25 @@ export function useAsyncSideEffectState<T>(
 
   const asyncSetState = useCallback(
     (value: T) => {
+      isAborted.current = false
       cleanUpRef.current?.()
-      const output = latestBeforeChange.current(value)
+
+      const output = latestBeforeChange.current(value, {
+        abort: () => {
+          isAborted.current = true
+          setIsPending(false)
+        },
+      })
 
       if (output instanceof Promise) {
         setIsPending(true)
         output
-          .then(() => setState(value))
+          .then(() => !isAborted.current && setState(value))
           .catch()
-          .finally(() => setIsPending(false))
+          .finally(() => {
+            isAborted.current = false
+            setIsPending(false)
+          })
         return
       }
 
