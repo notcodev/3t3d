@@ -153,6 +153,9 @@ importers:
 
   applications/frontend:
     dependencies:
+      '@effector/reflect':
+        specifier: ^9.2.0
+        version: 9.2.0(effector-react@23.2.1(effector@23.2.3)(react@18.3.1))(effector@23.2.3)(react@18.3.1)
       '@radix-ui/react-dialog':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -168,6 +171,9 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.74.4
         version: 1.74.4(@tanstack/router-generator@1.74.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@trpc/client':
+        specifier: ^10.45.2
+        version: 10.45.2(@trpc/server@10.45.2)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -201,6 +207,9 @@ importers:
       three:
         specifier: ^0.163.0
         version: 0.163.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@3t3d/backend':
         specifier: workspace:*
@@ -1428,6 +1437,13 @@ packages:
 
   '@drizzle-team/brocli@0.10.1':
     resolution: {integrity: sha512-AHy0vjc+n/4w/8Mif+w86qpppHuF3AyXbcWW+R/W7GNA3F5/p2nuhlkCJaTXSLZheB4l1rtHzOfr9A7NwoR/Zg==}
+
+  '@effector/reflect@9.2.0':
+    resolution: {integrity: sha512-jumgC1Ztl28gRmhLei2TX3bF0p1sD/LhAWHWggbmiNcZnpX4K6odTITrFLSu4wKkyP+AX9QpF/wiqLi0njDP1A==}
+    peerDependencies:
+      effector: ^23.1.0
+      effector-react: ^23.1.0
+      react: '>=16.8.0 <19.0.0'
 
   '@emnapi/core@1.3.0':
     resolution: {integrity: sha512-9hRqVlhwqBqCoToZ3hFcNVqL+uyHV06Y47ax4UB8L6XgVRqYz7MFnfessojo6+5TK89pKwJnpophwjTMOeKI9Q==}
@@ -3159,6 +3175,11 @@ packages:
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
+
+  '@trpc/client@10.45.2':
+    resolution: {integrity: sha512-ykALM5kYWTLn1zYuUOZ2cPWlVfrXhc18HzBDyRhoPYN0jey4iQHEFSEowfnhg1RvYnrAVjNBgHNeSAXjrDbGwg==}
+    peerDependencies:
+      '@trpc/server': 10.45.2
 
   '@trpc/server@10.45.2':
     resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
@@ -9090,6 +9111,12 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.1': {}
 
+  '@effector/reflect@9.2.0(effector-react@23.2.1(effector@23.2.3)(react@18.3.1))(effector@23.2.3)(react@18.3.1)':
+    dependencies:
+      effector: 23.2.3
+      effector-react: 23.2.1(effector@23.2.3)(react@18.3.1)
+      react: 18.3.1
+
   '@emnapi/core@1.3.0':
     dependencies:
       '@emnapi/wasi-threads': 1.0.1
@@ -10637,6 +10664,10 @@ snapshots:
       '@tapjs/core': 4.0.0(@swc/core@1.7.35)(@types/node@20.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@tokenizer/token@0.3.0': {}
+
+  '@trpc/client@10.45.2(@trpc/server@10.45.2)':
+    dependencies:
+      '@trpc/server': 10.45.2
 
   '@trpc/server@10.45.2': {}
 
