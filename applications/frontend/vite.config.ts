@@ -15,6 +15,7 @@ export default defineConfig({
         'routeTree.gen.ts',
       ),
     }),
+    svgr(),
     react(),
   ],
   resolve: {
