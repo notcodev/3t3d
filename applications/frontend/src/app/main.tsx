@@ -7,7 +7,7 @@ import { appStarted } from '@/shared/config/init'
 
 import { App } from './app'
 
-const container = document.querySelector('#root')!
+const container = document.body
 const root = ReactDOM.createRoot(container)
 
 appStarted()
