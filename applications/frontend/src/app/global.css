@@ -59,6 +59,8 @@
     --ui-primary-color-dark-hover: var(--ui-color-green-9);
 
     --ui-pixel-size: 0.125rem;
+
+    --ui-container-width: 48rem;
   }
 }
 @layer base {

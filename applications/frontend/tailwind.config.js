@@ -4,6 +4,10 @@ const tailwindConfig = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      maxWidth: {
+        contaiter: 'var(--ui-container-width)',
+      },
+
       spacing: {
         pixel: {
           DEFAULT: 'var(--ui-pixel-size)',
