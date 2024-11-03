@@ -16,7 +16,8 @@
   "scripts": {
     "dev": "NODE_ENV=development dotenvx run --env-file=.env.development -- nodemon src/server.ts",
     "test": "NODE_ENV=test dotenvx run --env-file=.env.test -- tap --node-arg=--import=@swc-node/register/esm-register src/**/*.test.ts",
-    "build": "shx rm -rf dist && tsc && swc src drizzle -d dist",
+    "build": "pnpm exec build:app && pnpm exec build:types",
+    "build:app": "shx rm -rf dist && tsc && swc src drizzle -d dist",
     "watch:trpc": "nodemon -w src -w drizzle --exec pnpm build:types",
     "build:types": "shx rm -rf dist/index.d.ts && rollup -c --configPlugin @rollup/plugin-typescript",
     "lint": "eslint . --ext ts --no-error-on-unmatched-pattern --fix",
@@ -24,9 +25,9 @@
     "migration:push": "node --import=@swc-node/register/esm-register drizzle/migrate.ts"
   },
   "dependencies": {
+    "@3t3d/core": "workspace:*",
     "@fastify/cookie": "^11.0.1",
     "@fastify/websocket": "^11.0.1",
-    "@3t3d/core": "workspace:*",
     "@trpc/server": "^10.45.2",
     "bcrypt": "^5.1.1",
     "drizzle-orm": "^0.34.1",

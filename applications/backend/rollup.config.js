@@ -1,7 +1,6 @@
-import { RollupOptions } from 'rollup'
 import dts from 'rollup-plugin-dts'
 
-const rollupConfig: RollupOptions = {
+export default {
   input: './src/server.ts',
   output: {
     file: 'dist/index.d.ts',
@@ -9,5 +8,3 @@ const rollupConfig: RollupOptions = {
   },
   plugins: [dts({ tsconfig: './tsconfig.types.json' })],
 }
-
-export default rollupConfig
