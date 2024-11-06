@@ -1,8 +1,8 @@
 {
-  "watch": ["src/", "drizzle/", ".env"],
+  "watch": ["src/", "drizzle/", ".env.*"],
   "ext": "*",
   "exitcrash": false,
-  "ignore": ["*.test.ts"],
+  "ignore": ["*.test.ts", ".env.example"],
   "execMap": {
     "ts": "node --import @swc-node/register/esm-register"
   }
